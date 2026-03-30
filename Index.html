@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Divine-Favour Mokwunye — Virtual Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0f1f3d;
+    --navy-mid: #1b2f52;
+    --orange: #e07b39;
+    --orange-light: #f0a06a;
+    --cream: #faf7f2;
+    --warm-white: #ffffff;
+    --text: #2a2a2a;
+    --text-muted: #6b6b6b;
+    --border: #e8e0d6;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 6%;
+    background: rgba(15,31,61,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600;
+    color: #fff; letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--orange); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.7); text-decoration: none;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--orange-light); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 6% 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(224,123,57,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -100px; left: 30%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-text { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--orange);
+    border: 1px solid rgba(224,123,57,0.4);
+    padding: 6px 14px; border-radius: 2px; margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 5vw, 4.8rem);
+    font-weight: 700; color: #fff;
+    line-height: 1.05; margin-bottom: 20px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 em { color: var(--orange-light); font-style: italic; }
+  .hero-sub {
+    font-size: 1.05rem; color: rgba(255,255,255,0.6);
+    line-height: 1.7; max-width: 480px; margin-bottom: 40px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-ctas {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--orange); color: #fff;
+    padding: 14px 30px; border-radius: 3px;
+    font-size: 0.9rem; font-weight: 600; letter-spacing: 0.04em;
+    text-decoration: none; transition: all 0.25s;
+    border: 2px solid var(--orange);
+  }
+  .btn-primary:hover { background: transparent; color: var(--orange); }
+  .btn-outline {
+    background: transparent; color: rgba(255,255,255,0.8);
+    padding: 14px 30px; border-radius: 3px;
+    font-size: 0.9rem; font-weight: 500; letter-spacing: 0.04em;
+    text-decoration: none; transition: all 0.25s;
+    border: 2px solid rgba(255,255,255,0.2);
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+
+  .hero-visual {
+    display: flex; justify-content: center; align-items: center;
+    position: relative; z-index: 2;
+    animation: fadeUp 0.7s 0.25s ease both;
+  }
+  .hero-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 36px;
+    backdrop-filter: blur(10px);
+    max-width: 340px; width: 100%;
+  }
+  .hero-avatar {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--orange-light));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 700; color: #fff;
+    margin-bottom: 20px;
+  }
+  .hero-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600; color: #fff; margin-bottom: 4px;
+  }
+  .hero-card p { font-size: 0.82rem; color: var(--orange-light); margin-bottom: 20px; }
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+  .stat-box {
+    background: rgba(255,255,255,0.06); border-radius: 8px;
+    padding: 14px; text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 700; color: var(--orange-light); display: block;
+  }
+  .stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; }
+  .availability {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 20px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(74,222,128,0.6); animation: pulse 2s infinite; }
+
+  /* ── SECTIONS GENERAL ── */
+  section { padding: 100px 6%; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--orange); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
+    color: var(--navy); line-height: 1.15; margin-bottom: 16px;
+  }
+  .section-title em { color: var(--orange); font-style: italic; }
+  .section-intro {
+    font-size: 1rem; color: var(--text-muted); line-height: 1.75;
+    max-width: 560px; margin-bottom: 56px;
+  }
+
+  /* ── ABOUT ── */
+  .about { background: var(--warm-white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .about-text p {
+    font-size: 1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px;
+  }
+  .about-text strong { color: var(--navy); }
+  .highlight-box {
+    background: var(--cream); border-left: 3px solid var(--orange);
+    padding: 20px 24px; border-radius: 0 8px 8px 0; margin-top: 28px;
+    font-size: 0.95rem; color: var(--navy); font-style: italic;
+    font-family: 'Cormorant Garamond', serif; line-height: 1.6; font-size: 1.15rem;
+  }
+  .about-details { display: flex; flex-direction: column; gap: 16px; }
+  .detail-card {
+    background: var(--cream); border-radius: 10px; padding: 22px 26px;
+    display: flex; align-items: flex-start; gap: 16px;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .detail-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+  .detail-icon {
+    width: 40px; height: 40px; border-radius: 8px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .detail-card h4 { font-size: 0.9rem; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .detail-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* ── SERVICES ── */
+  .services { background: var(--cream); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .service-card {
+    background: var(--warm-white); border-radius: 12px; padding: 32px 28px;
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+    transition: all 0.3s;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--orange-light));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.09); }
+  .service-icon { font-size: 1.8rem; margin-bottom: 16px; display: block; }
+  .service-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-bottom: 10px;
+  }
+  .service-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+
+  /* ── SAMPLES ── */
+  .samples { background: var(--navy); }
+  .samples .section-title { color: #fff; }
+  .samples .section-intro { color: rgba(255,255,255,0.55); }
+  .samples-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .sample-card {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; overflow: hidden;
+    transition: all 0.3s;
+  }
+  .sample-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-3px); }
+  .sample-preview {
+    height: 180px; display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; position: relative; overflow: hidden;
+  }
+  .sample-preview.p1 { background: linear-gradient(135deg, #1a3a5c, #2d5986); }
+  .sample-preview.p2 { background: linear-gradient(135deg, #2d1b00, #5c3710); }
+  .sample-preview.p3 { background: linear-gradient(135deg, #0d2d1a, #1a5c35); }
+  .sample-preview.p4 { background: linear-gradient(135deg, #1a0d2d, #3d1a5c); }
+  .sample-preview.p5 { background: linear-gradient(135deg, #2d0d0d, #5c1a1a); }
+  .sample-label {
+    position: absolute; bottom: 12px; right: 12px;
+    background: rgba(0,0,0,0.5); color: rgba(255,255,255,0.7);
+    font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px;
+  }
+  .sample-body { padding: 22px 24px; }
+  .sample-body h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 600; color: #fff; margin-bottom: 8px;
+  }
+  .sample-body p { font-size: 0.83rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .sample-tag {
+    display: inline-block; margin-top: 12px;
+    font-size: 0.72rem; color: var(--orange-light); letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 600;
+  }
+
+  /* ── TOOLS ── */
+  .tools-section { background: var(--warm-white); }
+  .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .tool-group { background: var(--cream); border-radius: 10px; padding: 22px; border: 1px solid var(--border); }
+  .tool-group h4 {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--orange); margin-bottom: 12px;
+  }
+  .tool-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tool-pill {
+    background: var(--warm-white); border: 1px solid var(--border);
+    border-radius: 20px; padding: 5px 12px;
+    font-size: 0.78rem; color: var(--navy); font-weight: 500;
+  }
+
+  /* ── TESTIMONIAL ── */
+  .testimonial-section { background: var(--cream); }
+  .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .testi-card {
+    background: var(--warm-white); border-radius: 12px; padding: 32px;
+    border: 1px solid var(--border);
+  }
+  .testi-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; color: var(--navy); line-height: 1.7;
+    margin-bottom: 20px; font-style: italic;
+  }
+  .testi-quote::before { content: '\201C'; color: var(--orange); font-size: 2rem; line-height: 0; vertical-align: -0.5em; }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+    font-weight: 700; color: #fff;
+  }
+  .testi-name { font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+  .testi-role { font-size: 0.78rem; color: var(--text-muted); }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    background: var(--navy);
+    text-align: center;
+  }
+  .contact-section .section-title { color: #fff; }
+  .contact-section .section-intro { color: rgba(255,255,255,0.55); margin: 0 auto 48px; }
+  .contact-cards { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 48px; }
+  .contact-card {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 24px 32px;
+    display: flex; align-items: center; gap: 14px;
+    min-width: 220px;
+  }
+  .contact-card-icon { font-size: 1.5rem; }
+  .contact-card-label { font-size: 0.72rem; color: var(--orange-light); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+  .contact-card-value { font-size: 0.92rem; color: #fff; font-weight: 500; }
+  .cta-big {
+    display: inline-block;
+    background: var(--orange); color: #fff;
+    padding: 18px 48px; border-radius: 4px;
+    font-size: 1rem; font-weight: 600; letter-spacing: 0.05em;
+    text-decoration: none; transition: all 0.25s;
+    border: 2px solid var(--orange);
+  }
+  .cta-big:hover { background: transparent; color: var(--orange); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #090f1d;
+    padding: 28px 6%;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  footer p { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+  footer a { color: var(--orange-light); text-decoration: none; font-size: 0.8rem; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding-top: 100px; }
+    .hero-visual { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Divine<span>.</span>Favour</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#samples">Work Samples</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-tag">Available for hire · Remote</div>
+    <h1>Your <em>organised,</em><br>reliable Virtual<br>Assistant</h1>
+    <p class="hero-sub">Hi, I'm Divine-Favour — I help business owners and entrepreneurs reclaim their time by handling the admin, so they can focus on what they do best.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Hire Me</a>
+      <a href="#samples" class="btn-outline">View My Work</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="hero-avatar">DF</div>
+      <h3>Divine-Favour Mokwunye</h3>
+      <p>Administrative Virtual Assistant</p>
+      <div style="font-size:0.82rem; color:rgba(255,255,255,0.5); line-height:1.6;">
+        BSc Food Technology · University of Ibadan<br>
+        Certified VA · Digital Witch Tech School<br>
+        Based in Nigeria · Works Globally
+      </div>
+      <div class="stat-row">
+        <div class="stat-box">
+          <span class="stat-num">4+</span>
+          <span class="stat-label">Roles Held</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">10+</span>
+          <span class="stat-label">Tools Mastered</span>
+        </div>
+      </div>
+      <div class="availability">
+        <div class="dot"></div>
+        Available for new clients
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <div class="section-label">About Me</div>
+      <h2 class="section-title">Detail-driven. <em>People-first.</em></h2>
+      <p>I'm a Food Technology graduate from the University of Ibadan with hands-on experience in office administration, customer support, and team coordination — and I've turned all of that into a focused career as a Virtual Assistant.</p>
+      <p>I understand that behind every busy entrepreneur is a pile of emails, unread messages, missed appointments, and tasks that keep getting pushed to tomorrow. <strong>That's exactly where I come in.</strong></p>
+      <p>Whether it's keeping your inbox at zero, managing your calendar, handling customer enquiries, or organising your data — I'm the person quietly making sure everything runs smoothly while you focus on growth.</p>
+      <div class="highlight-box">"I don't just complete tasks — I anticipate what's needed next."</div>
+    </div>
+    <div class="about-details reveal">
+      <div class="detail-card">
+        <div class="detail-icon">🎓</div>
+        <div>
+          <h4>Certified Virtual Assistant</h4>
+          <p>Trained at Digital Witch Tech School with practical, industry-relevant skills.</p>
+        </div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon">📋</div>
+        <div>
+          <h4>Real Administrative Experience</h4>
+          <p>Former Secretary and Admin Intern — I've managed real offices, real clients, real deadlines.</p>
+        </div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon">🔬</div>
+        <div>
+          <h4>Analytical Background</h4>
+          <p>My science degree means I'm thorough, process-driven, and excellent with data and documentation.</p>
+        </div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon">🌍</div>
+        <div>
+          <h4>Remote-Ready</h4>
+          <p>Fluent in all the tools modern remote teams use — from Slack to Asana to HubSpot.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="reveal">
+    <div class="section-label">What I Do</div>
+    <h2 class="section-title">Services I <em>Offer</em></h2>
+    <p class="section-intro">I offer a focused range of VA services designed to take the administrative load off your plate — delivered remotely, reliably, and with attention to detail.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <span class="service-icon">📧</span>
+      <h3>Email & Inbox Management</h3>
+      <p>I organise, filter, draft, and respond to emails — keeping your inbox clean, prioritised, and stress-free every day.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">📅</span>
+      <h3>Calendar & Appointment Scheduling</h3>
+      <p>From booking meetings to managing conflicts and sending reminders — your time is protected and every slot is intentional.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🤝</span>
+      <h3>Customer Support</h3>
+      <p>Handling enquiries, resolving complaints, and maintaining client records — professionally and promptly, every time.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">📊</span>
+      <h3>Data Entry & Research</h3>
+      <p>Accurate data entry, spreadsheet management, internet research, and lead list building — clean, organised, and on time.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🔍</span>
+      <h3>Lead Generation</h3>
+      <p>Finding and qualifying potential clients using Apollo, Lemlist, and LinkedIn outreach — building your pipeline while you sleep.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">⚙️</span>
+      <h3>Workflow & Admin Organisation</h3>
+      <p>Setting up Trello boards, writing SOPs, organising Google Drive, and automating repetitive tasks with Zapier.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WORK SAMPLES -->
+<section class="samples" id="samples">
+  <div class="reveal">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-title" style="color:#fff;">Work <em>Samples</em></h2>
+    <p class="section-intro">These are mock samples created to demonstrate my skills and approach. Real client work available upon request.</p>
+  </div>
+  <div class="samples-grid reveal">
+    <div class="sample-card">
+      <div class="sample-preview p1">
+        📥
+        <span class="sample-label">Template</span>
+      </div>
+      <div class="sample-body">
+        <h4>Email Inbox Organisation System</h4>
+        <p>A folder structure, labelling system, and filtering rules set up for a mock e-commerce client's Gmail inbox.</p>
+        <span class="sample-tag">Gmail · Google Workspace</span>
+      </div>
+    </div>
+    <div class="sample-card">
+      <div class="sample-preview p2">
+        📋
+        <span class="sample-label">SOP</span>
+      </div>
+      <div class="sample-body">
+        <h4>Customer Inquiry Handling SOP</h4>
+        <p>A step-by-step Standard Operating Procedure for handling customer complaints and enquiries for a small business.</p>
+        <span class="sample-tag">Documentation · Process Design</span>
+      </div>
+    </div>
+    <div class="sample-card">
+      <div class="sample-preview p3">
+        📈
+        <span class="sample-label">Spreadsheet</span>
+      </div>
+      <div class="sample-body">
+        <h4>Lead Generation Tracker</h4>
+        <p>A 20-row mock lead list with company name, contact, LinkedIn, email, status, and notes columns — built in Google Sheets.</p>
+        <span class="sample-tag">Lead Gen · Google Sheets · Apollo</span>
+      </div>
+    </div>
+    <div class="sample-card">
+      <div class="sample-preview p4">
+        ✉️
+        <span class="sample-label">Email Copy</span>
+      </div>
+      <div class="sample-body">
+        <h4>Newsletter Draft — Brand Announcement</h4>
+        <p>A polished email newsletter draft written for a fictional wellness brand promoting a new product launch.</p>
+        <span class="sample-tag">Email Marketing · Copywriting</span>
+      </div>
+    </div>
+    <div class="sample-card">
+      <div class="sample-preview p5">
+        🗓️
+        <span class="sample-label">Calendar</span>
+      </div>
+      <div class="sample-body">
+        <h4>Weekly Calendar Management Mock</h4>
+        <p>A structured weekly schedule for a mock founder — blocked time, recurring tasks, and buffer slots — built in Google Calendar.</p>
+        <span class="sample-tag">Calendly · Google Calendar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools-section" id="tools">
+  <div class="reveal">
+    <div class="section-label">Tech Stack</div>
+    <h2 class="section-title">Tools I <em>Work With</em></h2>
+    <p class="section-intro">I'm proficient with the tools modern businesses rely on — so onboarding is quick and disruption is minimal.</p>
+  </div>
+  <div class="tools-grid reveal">
+    <div class="tool-group">
+      <h4>Productivity</h4>
+      <div class="tool-list">
+        <span class="tool-pill">Google Docs</span>
+        <span class="tool-pill">Google Sheets</span>
+        <span class="tool-pill">Gmail</span>
+        <span class="tool-pill">Microsoft Word</span>
+        <span class="tool-pill">Microsoft Excel</span>
+      </div>
+    </div>
+    <div class="tool-group">
+      <h4>Communication</h4>
+      <div class="tool-list">
+        <span class="tool-pill">Slack</span>
+        <span class="tool-pill">Zoom</span>
+        <span class="tool-pill">Google Meet</span>
+        <span class="tool-pill">WhatsApp Business</span>
+      </div>
+    </div>
+    <div class="tool-group">
+      <h4>Project Management</h4>
+      <div class="tool-list">
+        <span class="tool-pill">Trello</span>
+        <span class="tool-pill">Asana</span>
+        <span class="tool-pill">Monday.com</span>
+        <span class="tool-pill">Calendly</span>
+      </div>
+    </div>
+    <div class="tool-group">
+      <h4>CRM & Support</h4>
+      <div class="tool-list">
+        <span class="tool-pill">HubSpot</span>
+        <span class="tool-pill">Freshdesk</span>
+        <span class="tool-pill">Zendesk</span>
+      </div>
+    </div>
+    <div class="tool-group">
+      <h4>Sales & Outreach</h4>
+      <div class="tool-list">
+        <span class="tool-pill">Apollo</span>
+        <span class="tool-pill">Lemlist</span>
+        <span class="tool-pill">LinkedIn</span>
+      </div>
+    </div>
+    <div class="tool-group">
+      <h4>Automation & Design</h4>
+      <div class="tool-list">
+        <span class="tool-pill">Zapier</span>
+        <span class="tool-pill">Canva</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonial-section">
+  <div class="reveal">
+    <div class="section-label">Kind Words</div>
+    <h2 class="section-title">What People <em>Say</em></h2>
+    <p class="section-intro">References from colleagues and supervisors who have worked with me directly.</p>
+  </div>
+  <div class="testi-grid reveal">
+    <div class="testi-card">
+      <p class="testi-quote">Divine-Favour is one of the most organised and dependable people I have worked with. She managed our office communications with professionalism and handled every customer interaction with care and patience.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">S</div>
+        <div>
+          <div class="testi-name">Former Supervisor</div>
+          <div class="testi-role">Fantasy Table Water, Abuja</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <p class="testi-quote">She brought a level of attention to detail to our documentation that made a real difference. Her reports were always timely, accurate, and clearly presented — a great asset to the team.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">K</div>
+        <div>
+          <div class="testi-name">Lab Supervisor</div>
+          <div class="testi-role">Kembiz Laboratory, Abuja</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <p class="testi-quote">Divine-Favour was a dedicated and proactive member of the TESA Press team. Her editorial work was thorough and she consistently met deadlines without compromising quality.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">U</div>
+        <div>
+          <div class="testi-name">Faculty Adviser</div>
+          <div class="testi-role">TESA Press, University of Ibadan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p style="text-align:center; margin-top:32px; font-size:0.82rem; color:var(--text-muted);">* Testimonials are paraphrased references. Full written references available on request.</p>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="reveal">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Let's <em>Work Together</em></h2>
+    <p class="section-intro">Ready to delegate, declutter, and grow? I'd love to hear about your business and how I can support you.</p>
+  </div>
+  <div class="contact-cards reveal">
+    <div class="contact-card">
+      <div class="contact-card-icon">📞</div>
+      <div>
+        <div class="contact-card-label">Phone / WhatsApp</div>
+        <div class="contact-card-value">08084086960</div>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-card-icon">✉️</div>
+      <div>
+        <div class="contact-card-label">Email</div>
+        <div class="contact-card-value">mifeoma115@gmail.com</div>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-card-icon">💼</div>
+      <div>
+        <div class="contact-card-label">LinkedIn</div>
+        <div class="contact-card-value">divine-favour-mokwunye</div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal">
+    <a href="mailto:mifeoma115@gmail.com" class="cta-big">Send Me an Email</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Mokwunye Divine-Favour Ifeoma. All rights reserved.</p>
+  <a href="https://www.linkedin.com/in/divinefavour-mokwunye-097a19354" target="_blank">LinkedIn ↗</a>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
